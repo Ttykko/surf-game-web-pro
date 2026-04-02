@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Surf Resources Adventure - Juego Multijugador con Node.js y MySQL">
+    <title>Surf Resources Adventure | Pro Edition</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         OVERLAY LOGIN / LOBBY
+    ========================================== -->
+    <section id="auth-overlay" class="overlay">
+        <div class="auth-card">
+
+            <header>
+                <h1 class="neon-text">🏄‍♂️ SURF CHECK-IN</h1>
+                <p id="player-turn-label" class="status-label">
+                    Esperando surfistas en el lobby...
+                </p>
+            </header>
+
+            <!-- FORM LOGIN -->
+            <div class="form-group">
+
+                <input 
+                    type="text" 
+                    id="username" 
+                    placeholder="Nombre de usuario"
+                    autocomplete="off"
+                >
+
+                <!-- 🔥 EMAIL (IMPORTANTE PARA REGISTRO) -->
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="Correo electrónico 📧"
+                >
+
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Contraseña"
+                >
+
+                <button id="loginBtn" class="btn-primary">
+                    INGRESAR AL AGUA 🌊
+                </button>
+
+            </div>
+
+            <!-- RECUPERAR PASSWORD -->
+            <div style="margin-top: 15px; text-align: center;">
+                <a href="#" id="forgotPasswordBtn" class="link-secundario">
+                    ¿Olvidaste tu acceso? Recuperar 🌊
+                </a>
+            </div>
+
+            <!-- RESET PASSWORD -->
+            <div id="reset-password-section" style="display:none; margin-top:15px; border-top:1px solid #333; padding-top:15px;">
+                <div class="form-group">
+
+                    <input 
+                        type="text" 
+                        id="recoveryCodeInp" 
+                        placeholder="Código recibido"
+                        maxlength="8"
+                    >
+
+                    <input 
+                        type="password" 
+                        id="newPasswordInp" 
+                        placeholder="Nueva contraseña"
+                    >
+
+                    <button id="resetPasswordBtn" class="btn-primary" style="background:#ffcc00; color:#000;">
+                        CAMBIAR CONTRASEÑA 🔑
+                    </button>
+
+                </div>
+            </div>
+
+            <footer class="auth-footer">
+                <p id="auth-msg" class="error-msg"></p>
+            </footer>
+
+        </div>
+    </section>
+
+    <!-- ==========================================
+         TABLERO DE JUEGO
+    ========================================== -->
+    <main id="gameBoard" class="grid-container">
+
+        <!-- PLAYER 1 -->
+        <article id="player1" class="player-panel">
+            <header class="panel-header">
+                <h2><span class="player-name">Jugador 1</span></h2>
+            </header>
+            <ul class="items-grid items"></ul>
+        </article>
+
+        <!-- PLAYER 2 -->
+        <article id="player2" class="player-panel">
+            <header class="panel-header">
+                <h2><span class="player-name">Jugador 2</span></h2>
+            </header>
+            <ul class="items-grid items"></ul>
+        </article>
+
+        <!-- PLAYER 3 -->
+        <article id="player3" class="player-panel">
+            <header class="panel-header">
+                <h2><span class="player-name">Jugador 3</span></h2>
+            </header>
+            <ul class="items-grid items"></ul>
+        </article>
+
+        <!-- PLAYER 4 -->
+        <article id="player4" class="player-panel">
+            <header class="panel-header">
+                <h2><span class="player-name">Jugador 4</span></h2>
+            </header>
+            <ul class="items-grid items"></ul>
+        </article>
+
+        <!-- CENTRO -->
+        <section id="centerPanel" class="action-center">
+
+            <div class="game-info">
+                <h2 class="game-title">Surf Resources</h2>
+                <p id="status" class="game-status">Conectando...</p>
+                <button id="rollBtn" class="btn-roll" hidden>
+                    🎲 TIRAR DADO
+                </button>
+            </div>
+
+            <!-- HISTORIAL -->
+            <aside id="leaderboard" class="accordion">
+                <button id="toggleHistoryBtn" class="accordion-header">
+                    🏆 ÚLTIMOS GANADORES <span class="arrow">▼</span>
+                </button>
+
+                <div id="historyContent" class="accordion-content">
+                    <ul id="winnersList" class="history-list"></ul>
+                </div>
+            </aside>
+
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         SCRIPTS
+    ========================================== -->
+
+    <!-- Confetti REAL -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Socket -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- App -->
+    <script src="app.js"></script>
+
+</body>
+</html>

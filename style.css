@@ -1,0 +1,202 @@
+/* ==========================================
+   VARIABLES Y RESET
+   ========================================== */
+:root {
+    --primary: #00c6ff;
+    --secondary: #0072ff;
+    --accent: #00ffcc;
+    --danger: #ff0077;
+    --gold: #ffd700;
+    --bg-dark: #0f2027;
+    --panel-bg: rgba(255, 255, 255, 0.03);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --shadow-pro: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: radial-gradient(circle at center, #2c5364, #203a43, var(--bg-dark));
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ==========================================
+   GRID DEL TABLERO (DINÁMICO)
+   ========================================== */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    height: 100vh;
+    padding: 20px;
+    /* Dejamos espacio a la derecha para que el panel fijo no tape nada */
+    padding-right: 250px; 
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- LÓGICA DE 2 JUGADORES --- */
+.players-2 { grid-template-columns: 1fr 1fr !important; }
+
+/* --- PANELES DE JUGADORES --- */
+.player-panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    height: 100%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.panel-header h2 {
+    font-size: 1.2rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 5px;
+}
+
+/* --- GRID DE ITEMS --- */
+.items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    list-style: none;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.items-grid li {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    border-left: 3px solid var(--primary);
+    animation: slideIn 0.3s ease-out;
+}
+
+/* ==========================================
+   NÚCLEO DE ACCIÓN (ESTILO SLIM EN ESQUINA)
+   ========================================== */
+.action-center {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 220px;
+    background: rgba(15, 32, 39, 0.95);
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: var(--shadow-pro);
+    backdrop-filter: blur(10px);
+}
+
+.game-title {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.game-status {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.btn-roll {
+    width: 100%;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+    transition: all 0.2s ease;
+}
+
+.btn-roll:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 0 20px var(--primary); }
+.btn-roll:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+
+/* ==========================================
+   EFECTO VICTORIA "PLAYSTATION GOLD"
+   ========================================= */
+.winner-card {
+    border: 3px solid var(--gold) !important;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 0, 0, 0.4)) !important;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important;
+    transform: scale(1.05);
+    z-index: 50;
+}
+
+/* El destello metálico que recorre la carta */
+.winner-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: skewX(-25deg);
+    animation: shine 3s infinite;
+}
+
+/* Icono de Trofeo PlayStation */
+.winner-card .panel-header h2::after {
+    content: '🏆';
+    position: absolute;
+    right: 10px;
+    font-size: 1.4rem;
+    animation: trophyPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes shine {
+    to { left: 200%; }
+}
+
+@keyframes trophyPop {
+    from { transform: scale(0) rotate(-45deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* ==========================================
+   HISTORIAL, AUTH Y EXTRAS
+   ========================================== */
+.accordion { margin-top: 10px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; overflow: hidden; }
+.accordion-header { width: 100%; background: rgba(0, 198, 255, 0.1); border: none; padding: 8px; color: var(--primary); font-size: 9px; font-weight: bold; cursor: pointer; }
+.accordion-content { max-height: 0; transition: max-height 0.4s ease-out; }
+.accordion-content.open { max-height: 150px; padding: 10px; }
+.history-list { list-style: none; font-size: 9px; }
+
+.overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 10, 20, 0.98); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+.auth-card { background: rgba(0, 198, 255, 0.05); padding: 40px; border-radius: 24px; border: 1px solid var(--primary); width: 350px; text-align: center; }
+.auth-card input { width: 100%; padding: 12px; margin: 10px 0; background: #001428; border: 1px solid var(--primary); color: white; border-radius: 10px; }
+
+.hidden-panel { display: none !important; }
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }

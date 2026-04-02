@@ -1,0 +1,11 @@
+# Credenciales y configuración sensible
+.env
+
+# Dependencias
+node_modules/
+
+# Logs
+npm-debug.log
+*.log
+
+git add .gitignore
