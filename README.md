@@ -22,12 +22,15 @@ Validación mediante **Regex** para asegurar datos estructurados y bloqueo de ba
 Verificación de integridad de base de datos y levantamiento de variables de entorno seguras.
 ![Terminal](./assets/auth-layer.png)
 
-### 3. Sincronización en Tiempo Real
-Gestión de quórum para inicio de partida y eventos asíncronos cruzados ("Zumbidos").
+### 3. Sincronización en Tiempo Real (Lobby)
+Gestión de quórum para inicio de partida y eventos asíncronos.
 ![Lobby](./assets/lobby-sync.png)
+
+### 4. Gameplay e Interacción
+Experiencia de usuario y eventos cruzados ("Zumbidos") durante la partida.
 ![Interacción](./assets/gameplay-interaction.png)
 
-### 4. Persistencia E2E (Leaderboard)
+### 5. Persistencia E2E (Leaderboard)
 Mapeo de datos relacionales en MySQL utilizando la columna `played_at` para el ranking histórico.
 ![Leaderboard](./assets/leaderboard-final.png)
 
