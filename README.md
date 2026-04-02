@@ -14,13 +14,13 @@ Este sistema representa la **maduración técnica** de una lógica original conc
 
 ## 🖼️ Galería del Sistema (Arquitectura Visual)
 
-### 1. Capa de Integridad de Entrada
-Validación mediante **Regex** para asegurar datos estructurados y bloqueo de basura en el registro.
-![Auth](./assets/server-terminal.png)
+### 1. Infraestructura y Backend
+Verificación de integridad de base de datos y levantamiento de variables de entorno seguro.
+![Terminal](./assets/server-terminal.png)
 
-### 2. Infraestructura y Backend
-Verificación de integridad de base de datos y levantamiento de variables de entorno seguras.
-![Terminal](./assets/auth-layer.png)
+### 2. Capa de Integridad de Entrada
+Validación mediante **Regex** para asegurar datos estructurados y bloqueo de basura en el registro.
+![Autenticación](./assets/auth-layer.png)
 
 ### 3. Sincronización en Tiempo Real (Lobby)
 Gestión de quórum para inicio de partida y eventos asíncronos.
