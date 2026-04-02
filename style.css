@@ -1,6 +1,6 @@
 /* ==========================================
-   VARIABLES Y RESET
-   ========================================== */
+   VARIABLES Y CONFIGURACIÓN PRO
+========================================== */
 :root {
     --primary: #00c6ff;
     --secondary: #0072ff;
@@ -8,45 +8,41 @@
     --danger: #ff0077;
     --gold: #ffd700;
     --bg-dark: #0f2027;
-    --panel-bg: rgba(255, 255, 255, 0.03);
+    --panel-bg: rgba(255, 255, 255, 0.04);
     --border-glass: rgba(255, 255, 255, 0.1);
     --shadow-pro: 0 15px 40px rgba(0, 0, 0, 0.6);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background: radial-gradient(circle at center, #2c5364, #203a43, var(--bg-dark));
-    color: white;
-    height: 100vh;
-    overflow: hidden;
+body { 
+    font-family: 'Roboto', sans-serif; 
+    background: radial-gradient(circle at center, #2c5364, #203a43, var(--bg-dark)); 
+    color: white; 
+    height: 100vh; 
+    overflow: hidden; 
+    backface-visibility: hidden;
 }
 
 /* ==========================================
-   GRID DEL TABLERO (DINÁMICO)
-   ========================================== */
+   GRID DEL TABLERO (ESTRUCTURA BASE)
+========================================== */
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 20px;
     height: 100vh;
-    padding: 20px;
-    /* Dejamos espacio a la derecha para que el panel fijo no tape nada */
-    padding-right: 250px; 
-    position: relative;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 20px 280px 20px 20px; /* Mantiene el espacio para el Action Center */
 }
 
-/* --- LÓGICA DE 2 JUGADORES --- */
-.players-2 { grid-template-columns: 1fr 1fr !important; }
-
-/* --- PANELES DE JUGADORES --- */
+/* ==========================================
+   PANEL DE JUGADORES (GLASSMORPHISM)
+========================================== */
 .player-panel {
     background: var(--panel-bg);
     border: 1px solid var(--border-glass);
@@ -54,71 +50,76 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     height: 100%;
+    overflow: hidden;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
 }
 
-.panel-header h2 {
-    font-size: 1.2rem;
-    color: var(--primary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--border-glass);
-    padding-bottom: 5px;
+.player-panel.current-turn { 
+    border: 2px solid var(--accent); 
+    box-shadow: 0 0 25px rgba(0, 255, 204, 0.2); 
+    transform: translateY(-5px);
 }
 
-/* --- GRID DE ITEMS --- */
+.panel-header h2 { 
+    font-size: 1.1rem; 
+    color: var(--primary); 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    margin-bottom: 12px; 
+    border-bottom: 1px solid var(--border-glass); 
+    padding-bottom: 8px; 
+}
+
 .items-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
     list-style: none;
-    overflow-y: auto;
-    padding-right: 5px;
 }
 
 .items-grid li {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    border-left: 3px solid var(--primary);
-    animation: slideIn 0.3s ease-out;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    border-left: 4px solid var(--primary);
+    animation: slideIn 0.3s ease-out forwards;
 }
 
 /* ==========================================
-   NÚCLEO DE ACCIÓN (ESTILO SLIM EN ESQUINA)
-   ========================================== */
+   ACTION CENTER (EL RECUADRO QUE SE AJUSTA)
+========================================== */
 .action-center {
-    position: fixed;
-    bottom: 20px;
+    position: fixed; /* Vuelve a ser fijo para mantener el look original */
+    top: 20px;
     right: 20px;
-    width: 220px;
-    background: rgba(15, 32, 39, 0.95);
+    width: 250px;
+    background: rgba(15, 32, 39, 0.92);
     border: 1px solid var(--primary);
-    border-radius: 20px;
-    padding: 15px;
+    border-radius: 24px;
+    padding: 20px;
     text-align: center;
     z-index: 1000;
     box-shadow: var(--shadow-pro);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 40px);
 }
 
-.game-title {
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    color: var(--primary);
-    margin-bottom: 10px;
-}
+.game-title { font-size: 0.6rem; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
 
-.game-status {
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: var(--accent);
-    margin-bottom: 15px;
+.game-status { 
+    font-size: 0.85rem; 
+    font-weight: bold; 
+    color: var(--accent); 
+    margin-bottom: 15px; 
+    background: rgba(0, 255, 204, 0.05);
+    padding: 8px;
+    border-radius: 10px;
+    word-break: break-all; /* Blindaje para correos largos */
 }
 
 .btn-roll {
@@ -126,77 +127,101 @@ body {
     background: linear-gradient(45deg, var(--primary), var(--secondary));
     color: white;
     border: none;
-    padding: 12px;
-    border-radius: 12px;
+    padding: 14px;
+    border-radius: 14px;
     font-weight: 900;
     cursor: pointer;
     text-transform: uppercase;
-    box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
-    transition: all 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 114, 255, 0.3);
 }
 
-.btn-roll:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 0 20px var(--primary); }
-.btn-roll:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
-
-/* ==========================================
-   EFECTO VICTORIA "PLAYSTATION GOLD"
-   ========================================= */
-.winner-card {
-    border: 3px solid var(--gold) !important;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 0, 0, 0.4)) !important;
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.4) !important;
-    transform: scale(1.05);
-    z-index: 50;
-}
-
-/* El destello metálico que recorre la carta */
-.winner-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transform: skewX(-25deg);
-    animation: shine 3s infinite;
-}
-
-/* Icono de Trofeo PlayStation */
-.winner-card .panel-header h2::after {
-    content: '🏆';
-    position: absolute;
-    right: 10px;
-    font-size: 1.4rem;
-    animation: trophyPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@keyframes shine {
-    to { left: 200%; }
-}
-
-@keyframes trophyPop {
-    from { transform: scale(0) rotate(-45deg); opacity: 0; }
-    to { transform: scale(1) rotate(0); opacity: 1; }
+.btn-buzz {
+    margin-top: 12px;
+    background: linear-gradient(45deg, var(--danger), #ff4d94);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    text-transform: uppercase;
+    transition: 0.2s;
 }
 
 /* ==========================================
-   HISTORIAL, AUTH Y EXTRAS
-   ========================================== */
-.accordion { margin-top: 10px; background: rgba(0, 0, 0, 0.3); border-radius: 10px; overflow: hidden; }
-.accordion-header { width: 100%; background: rgba(0, 198, 255, 0.1); border: none; padding: 8px; color: var(--primary); font-size: 9px; font-weight: bold; cursor: pointer; }
-.accordion-content { max-height: 0; transition: max-height 0.4s ease-out; }
-.accordion-content.open { max-height: 150px; padding: 10px; }
-.history-list { list-style: none; font-size: 9px; }
-
-.overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 10, 20, 0.98); z-index: 2000; display: flex; justify-content: center; align-items: center; }
-.auth-card { background: rgba(0, 198, 255, 0.05); padding: 40px; border-radius: 24px; border: 1px solid var(--primary); width: 350px; text-align: center; }
-.auth-card input { width: 100%; padding: 12px; margin: 10px 0; background: #001428; border: 1px solid var(--primary); color: white; border-radius: 10px; }
-
-.hidden-panel { display: none !important; }
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
+   OVERLAY LOGIN Y INPUTS BLINDADOS
+========================================== */
+.overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,10,20,0.98); z-index: 2000; display: flex; 
+    justify-content: center; align-items: center; 
 }
 
+.auth-card { 
+    background: rgba(255, 255, 255, 0.02); padding: 40px; border-radius: 30px; 
+    border: 1px solid var(--primary); width: 400px; text-align: center; 
+    backdrop-filter: blur(20px);
+}
+
+.input-container { position: relative; width: 100%; margin: 12px 0; }
+
+.auth-card input { 
+    width: 100%; padding: 12px 40px 12px 15px; background: rgba(0,0,0,0.4); 
+    border: 1px solid var(--border-glass); color: white; border-radius: 12px; outline: none;
+}
+
+.help-icon {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: var(--primary); color: #000; width: 18px; height: 18px;
+    border-radius: 50%; font-size: 11px; font-weight: bold; cursor: help;
+    display: flex; justify-content: center; align-items: center; z-index: 5;
+}
+
+/* Limpieza de iconos basura de navegadores */
+input[type="email"]::-webkit-contacts-auto-fill-button { display: none !important; }
+
+/* ==========================================
+   ACORDEÓN HISTORIAL
+========================================== */
+.accordion { margin-top: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; overflow: hidden; }
+.accordion-header { width: 100%; background: rgba(0,198,255,0.08); border: none; padding: 12px; color: var(--primary); font-size: 0.75rem; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; }
+.accordion-content { max-height: 0; transition: max-height 0.4s ease-out; overflow: hidden; }
+.accordion-content.open { max-height: 200px; border-top: 1px solid var(--border-glass); }
+
+/* ==========================================
+   MEDIA QUERIES (EL AJUSTE TECNOLÓGICO)
+========================================== */
+
+/* Cuando la pantalla es pequeña, el Action Center deja de ser fijo y baja */
+@media (max-width: 1100px) {
+    .grid-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr auto;
+        padding-right: 20px;
+        height: auto;
+        overflow-y: auto;
+    }
+    .action-center {
+        position: relative;
+        top: 0; right: 0;
+        width: 100%;
+        grid-column: span 2;
+        max-height: none;
+        margin-top: 20px;
+    }
+    body { overflow-y: auto; }
+}
+
+@media (max-width: 768px) {
+    .grid-container { grid-template-columns: 1fr; grid-template-rows: repeat(4, 350px) auto; }
+    .action-center { grid-column: span 1; }
+}
+
+/* Animaciones */
+@keyframes shake { 0%, 100% { transform: translate(0, 0); } 20%, 60% { transform: translate(-5px, 0); } 40%, 80% { transform: translate(5px, 0); } }
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
