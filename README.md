@@ -16,11 +16,11 @@ Este sistema representa la **maduración técnica** de una lógica original conc
 
 ### 1. Capa de Integridad de Entrada
 Validación mediante **Regex** para asegurar datos estructurados y bloqueo de basura en el registro.
-![Auth](./assets/auth-layer.png)
+![Auth](./assets/server-terminal)
 
 ### 2. Infraestructura y Backend
 Verificación de integridad de base de datos y levantamiento de variables de entorno seguras.
-![Terminal](./assets/server-terminal.png)
+![Terminal](./assets/auth-layer.png)
 
 ### 3. Sincronización en Tiempo Real
 Gestión de quórum para inicio de partida y eventos asíncronos cruzados ("Zumbidos").
