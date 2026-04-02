@@ -16,7 +16,7 @@ Este sistema representa la **maduración técnica** de una lógica original conc
 
 ### 1. Capa de Integridad de Entrada
 Validación mediante **Regex** para asegurar datos estructurados y bloqueo de basura en el registro.
-![Auth](./assets/server-terminal)
+![Auth](./assets/server-terminal.png)
 
 ### 2. Infraestructura y Backend
 Verificación de integridad de base de datos y levantamiento de variables de entorno seguras.
